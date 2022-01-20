@@ -7,6 +7,7 @@ import Order from "./components/Order";
 import MyOrders from "./components/MyOrders";
 import AdminPage from "./components/AdminPage";
 import Navbar from "./layout/Navbar";
+import Footer from "./layout/Footer";
 import PrivateRoute from "./routing/PrivateRoute";
 import { Routes, Route } from "react-router-dom";
 
@@ -21,6 +22,7 @@ const App = () => {
         <Route path="/products" element={<Product />} />
         <Route path="/admin" element={<AdminPage />} />
       </Routes>
+      <Footer />
 
     </div>
   );
