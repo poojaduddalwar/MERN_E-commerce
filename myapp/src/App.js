@@ -10,14 +10,17 @@ import Navbar from "./layout/Navbar";
 import Footer from "./layout/Footer";
 import PrivateRoute from "./routing/PrivateRoute";
 import { Routes, Route } from "react-router-dom";
+import { Toaster } from 'react-hot-toast';
 
 const App = () => {
   return (
     <div className="App">
+      <div><Toaster /></div>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<PrivateRoute child={<Login />} />} />
+        {/* <Route path="/login" element={<PrivateRoute child={<Login />} />} /> */}
+        <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/products" element={<Product />} />
         <Route path="/admin" element={<AdminPage />} />

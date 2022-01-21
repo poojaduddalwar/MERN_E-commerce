@@ -27,11 +27,11 @@ export default function Home() {
                                 bg: 'blue.400',
                                 zIndex: -1,
                             }}>
-                            Freelance
+                            Accessories
                         </Text>
                         <br />{' '}
-                        <Text color={'blue.400'} as={'span'}>
-                            Design Projects
+                        <Text color={'red.400'} as={'span'}>
+                            That you'll love ❤️
                         </Text>{' '}
                     </Heading>
                     <Text fontSize={{ base: 'md', lg: 'lg' }} color={'gray.500'}>
@@ -41,14 +41,14 @@ export default function Home() {
                     <Stack direction={{ base: 'column', md: 'row' }} spacing={4}>
                         <Button
                             rounded={'full'}
-                            bg={'blue.400'}
+                            bg={'red.400'}
                             color={'white'}
                             _hover={{
                                 bg: 'blue.500',
                             }}>
-                            Create Project
+                            Shop
                         </Button>
-                        <Button rounded={'full'}>How It Works</Button>
+                        <Button rounded={'full'}>About Us</Button>
                     </Stack>
                 </Stack>
             </Flex>
