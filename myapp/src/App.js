@@ -8,6 +8,7 @@ import MyOrders from "./components/MyOrders";
 import AdminPage from "./components/AdminPage";
 import Navbar from "./layout/Navbar";
 import Footer from "./layout/Footer";
+import Admin from "./components/admin/Admin";
 import PrivateRoute from "./routing/PrivateRoute";
 import { Routes, Route } from "react-router-dom";
 import { Toaster } from 'react-hot-toast';
@@ -25,6 +26,7 @@ const App = () => {
         <Route path="/shop" element={<Products />} />
         <Route path="/shop/:productId" element={<Product />} />
         {/* <Route path="/admin" element={<AdminPage />} /> */}
+        <Route path='/admin' element={<Admin />} />
       </Routes>
       <Footer />
 

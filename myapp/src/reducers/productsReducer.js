@@ -23,6 +23,7 @@ const initialState = {
             category: "Watch Band",
             compatibleWith: "Apple Watch 30mm, 40mm ,41mm",
             color: "Pomegrenate",
+            stock: 40,
             imageUrl: 'https://cdn.shopify.com/s/files/1/0984/6842/products/Red-Fusion-38-40_1024x1024.jpg?v=1611006835'
         }, {
             id: 2,
@@ -34,6 +35,7 @@ const initialState = {
             category: "Watch Band",
             compatibleWith: "Apple Watch 42mm, 44mm ,45mm",
             color: "Orange",
+            stock: 9,
             imageUrl: 'https://cdn.shopify.com/s/files/1/0984/6842/products/Pomegranate-40_1024x1024.jpg?v=1620410372'
         }, {
             id: 3,
@@ -45,6 +47,7 @@ const initialState = {
             category: "Watch Band",
             compatibleWith: "Apple Watch 42mm, 44mm ,45mm",
             color: "Blue",
+            stock: 56,
             imageUrl: 'https://cdn.shopify.com/s/files/1/0984/6842/products/Sport_Loop-Midnight-40_1024x1024.jpg?v=1620410372'
         }, {
             id: 4,
@@ -56,6 +59,7 @@ const initialState = {
             category: "Iphone Case",
             compatibleWith: "Iphone 12",
             color: "Black",
+            stock: 100,
             imageUrl: 'https://cdn.shopify.com/s/files/1/0984/6842/products/12-Black_1024x1024.jpg?v=1604525686'
         }, {
             id: 5,
@@ -67,6 +71,7 @@ const initialState = {
             category: "Iphone Case",
             compatibleWith: "Iphone 12",
             color: "Yellow",
+            stock: 30,
             imageUrl: 'https://cdn.shopify.com/s/files/1/0984/6842/products/12-Sunflower_1024x1024.jpg?v=1630739597'
         }, {
             id: 6,
@@ -78,6 +83,7 @@ const initialState = {
             category: "Iphone Case",
             compatibleWith: "Iphone 12",
             color: "Orange",
+            stock: 19,
             imageUrl: 'https://cdn.shopify.com/s/files/1/0984/6842/products/12-Mystery-Flame_1024x1024.jpg?v=1606412986'
         }
     ]
@@ -87,6 +93,12 @@ const productReducer = (state = initialState, action) => {
     const { type, payload } = action
 
     switch (type) {
+        case "DELETE_PRODUCT":
+            const { productId } = payload
+            console.log(productId)
+            return {
+                products: state.products.filter(prod => prod.id !== productId)
+            }
         default:
             return state
     }

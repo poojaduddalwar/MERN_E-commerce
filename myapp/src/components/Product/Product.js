@@ -143,13 +143,3 @@ export default function Product() {
         </Container>
     );
 }
-
-/* 
-! IMPORTANT NOTE :- 
- we used {selectedProduct && selectedProduct.listingPrice} like
- this everywhere because if the selectedProduct has a value then 
- only we will continue with the other part i.e selectedProduct.
- listingPrice otherwise its going to just display null .
- instead of this we can also use ternary operator {selectedProduct ? selectedProduct.listingPrice : null} but we'll need to introduce a fallback case as well and for && we don't need that
- 
-*/
