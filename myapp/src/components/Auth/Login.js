@@ -12,7 +12,7 @@ import {
     Text,
 } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
-import { loginUser } from '../actions/auth';
+import { loginUser } from '../../actions/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router'
 

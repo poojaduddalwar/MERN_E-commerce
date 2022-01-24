@@ -1,8 +1,8 @@
 import Home from "./components/Home";
-import Login from "./components/Login";
-import Signup from "./components/Signup";
-import Products from "./components/Products";
-import Product from "./components/Product";
+import Login from "./components/Auth/Login"
+import Signup from "./components/Auth/Signup";
+import Products from "./components/Product/Products";
+import Product from "./components/Product/Product";
 import Order from "./components/Order";
 import MyOrders from "./components/MyOrders";
 import AdminPage from "./components/AdminPage";
@@ -22,8 +22,9 @@ const App = () => {
         {/* <Route path="/login" element={<PrivateRoute child={<Login />} />} /> */}
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/products" element={<Product />} />
-        <Route path="/admin" element={<AdminPage />} />
+        <Route path="/shop" element={<Products />} />
+        <Route path="/shop/:productId" element={<Product />} />
+        {/* <Route path="/admin" element={<AdminPage />} /> */}
       </Routes>
       <Footer />
 

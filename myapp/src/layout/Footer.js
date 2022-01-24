@@ -83,16 +83,16 @@ export default function Footer() {
                             <Logo color={useColorModeValue('gray.700', 'white')} />
                         </Box>
                         <Text fontSize={'sm'}>
-                            © 2021 Plus+. All rights reserved
+                            © 2022 Plus+. All rights reserved
                         </Text>
                         <Stack direction={'row'} spacing={6}>
-                            <SocialButton label={'Twitter'} href={'#'}>
+                            <SocialButton label={'Twitter'} href={'https://twitter.com/i/flow/login?input_flow_data=%7B%22requested_variant%22%3A%22eyJsYW5nIjoiZW4ifQ%3D%3D%22%7D'}>
                                 <FaTwitter />
                             </SocialButton>
-                            <SocialButton label={'YouTube'} href={'#'}>
+                            <SocialButton label={'YouTube'} href={'https://www.youtube.com/'}>
                                 <FaYoutube />
                             </SocialButton>
-                            <SocialButton label={'Instagram'} href={'#'}>
+                            <SocialButton label={'Instagram'} href={'https://www.instagram.com/'}>
                                 <FaInstagram />
                             </SocialButton>
                         </Stack>
