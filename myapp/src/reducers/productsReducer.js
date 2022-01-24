@@ -99,6 +99,12 @@ const productReducer = (state = initialState, action) => {
             return {
                 products: state.products.filter(prod => prod.id !== productId)
             }
+
+        case "ADD_PRODUCT":
+            const { product } = payload
+            return {
+                products: [...state.products, product]
+            }
         default:
             return state
     }
