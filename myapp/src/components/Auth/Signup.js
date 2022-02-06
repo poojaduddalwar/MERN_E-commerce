@@ -35,6 +35,7 @@ export default function Signup() {
     }
 
     //check to redirect the user once it has signed up
+
     const navigate = useNavigate()
 
     const { signup } = useSelector(state => state.authReducer)
