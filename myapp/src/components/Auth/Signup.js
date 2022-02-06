@@ -14,10 +14,12 @@ import {
     useColorModeValue,
     Link,
 } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
-import { Link as routerLink } from 'react-router-dom';
+import { Link as routerLink, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import { useDispatch, useSelector } from 'react-redux';
+import { signupUser } from '../../actions/auth';
 
 export default function Signup() {
     const [showPassword, setShowPassword] = useState(false);
@@ -26,15 +28,26 @@ export default function Signup() {
     const [firstName, setfirstName] = useState('');
     const [lastName, setlastName] = useState('');
 
+    const dispatch = useDispatch()
 
     const handleSignup = () => {
-        console.log({ email, firstName, lastName, password })
-        const users = JSON.parse(localStorage.getItem('users')) ?? []
-        toast.success("SIGNUP SUCCESSFUL !")
-        localStorage.setItem('users', JSON.stringify([...users, { email, firstName, lastName, password }]))
-        // so here if the left hand side i.e JSON.parse(localStorage.getItem('users')) is null we will get an empty array and they below we can use spread operator over an emoty array
-        // ?? - is nullish coalescing operator
+        dispatch(signupUser(email, firstName, lastName, password))
     }
+
+    //check to redirect the user once it has signed up
+    const navigate = useNavigate()
+
+    const { signup } = useSelector(state => state.authReducer)
+    // console.log(signup)
+    if (signup && signup === true) {
+        navigate('/login')
+    }
+
+    useEffect(() => {
+        return () => dispatch({
+            type: "REFRESH_SIGNUP"
+        })
+    }, [])
 
     return (
         <Flex
