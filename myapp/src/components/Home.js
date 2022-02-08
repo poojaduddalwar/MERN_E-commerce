@@ -41,6 +41,8 @@ export default function Home() {
                     </Text>
                     <Stack direction={{ base: 'column', md: 'row' }} spacing={4}>
                         <Button
+                            as={Link}
+                            to={'/shop'}
                             rounded={'full'}
                             bg={'red.400'}
                             color={'white'}

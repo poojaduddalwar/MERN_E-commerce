@@ -12,8 +12,24 @@ import Admin from "./components/admin/Admin";
 import PrivateRoute from "./routing/PrivateRoute";
 import { Routes, Route } from "react-router-dom";
 import { Toaster } from 'react-hot-toast';
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 const App = () => {
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+    if (token) {
+      //dispatch an action that modifies the store
+      console.log(token)
+      dispatch({
+        type: "SET_AUTH_TOKEN",
+        payload: { token }
+      })
+    }
+  }, [])
 
   return (
     <div className="App">

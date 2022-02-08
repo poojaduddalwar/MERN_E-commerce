@@ -64,6 +64,7 @@ export default function Navbar() {
                     spacing={6}>
                     <Button
                         as={lee}
+                        display={{ base: 'none', md: 'inline-flex' }}
                         fontSize={'sm'}
                         fontWeight={400}
                         variant={'link'}
@@ -72,7 +73,6 @@ export default function Navbar() {
                     </Button>
                     <Button
                         as={lee}
-                        display={{ base: 'none', md: 'inline-flex' }}
                         fontSize={'sm'}
                         fontWeight={600}
                         color={'white'}
