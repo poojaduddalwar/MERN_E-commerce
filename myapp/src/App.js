@@ -14,6 +14,7 @@ import { Routes, Route } from "react-router-dom";
 import { Toaster } from 'react-hot-toast';
 
 const App = () => {
+
   return (
     <div className="App">
       <div><Toaster /></div>
