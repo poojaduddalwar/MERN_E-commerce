@@ -1,6 +1,7 @@
 import { Box, Heading } from "@chakra-ui/react";
 import ProductsTable from "./ProductsTable";
 import AddProduct from "./AddProduct";
+import AddCategory from "./AddCategory";
 
 
 const Admin = () => {
@@ -12,6 +13,10 @@ const Admin = () => {
             </Box>
             <Box m={4}>
                 <AddProduct />
+            </Box>
+            <hr />
+            <Box m={4}>
+                <AddCategory />
             </Box>
         </Box>
     );

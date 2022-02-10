@@ -57,7 +57,18 @@ export default function Navbar() {
                     </Flex>
                 </Flex>
 
-                {token ? null : <Stack
+                {token ? <Button
+                    as={lee}
+                    fontSize={'md'}
+                    fontWeight={600}
+                    color={'white'}
+                    bg={'red.400'}
+                    to={'/'}
+                    _hover={{
+                        bg: 'red.300',
+                    }}>
+                    Logout
+                </Button> : <Stack
                     flex={{ base: 1, md: 0 }}
                     justify={'flex-end'}
                     direction={'row'}
@@ -65,7 +76,7 @@ export default function Navbar() {
                     <Button
                         as={lee}
                         display={{ base: 'none', md: 'inline-flex' }}
-                        fontSize={'sm'}
+                        fontSize={'md'}
                         fontWeight={400}
                         variant={'link'}
                         to={'/login'}>
@@ -73,7 +84,7 @@ export default function Navbar() {
                     </Button>
                     <Button
                         as={lee}
-                        fontSize={'sm'}
+                        fontSize={'md'}
                         fontWeight={600}
                         color={'white'}
                         bg={'blue.400'}

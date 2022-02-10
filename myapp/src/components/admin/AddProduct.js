@@ -57,7 +57,7 @@ const AddProduct = () => {
                 <Input onChange={(e) => { setlistingPrice(e.target.value) }} type='number' />
                 <FormLabel>Stock</FormLabel>
                 <Input onChange={(e) => { setstock(e.target.value) }} type='number' />
-                <Button onClick={handleAddProduct} marginTop={4} bg={'blue.400'}>Submit</Button>
+                <Button onClick={handleAddProduct} marginTop={4} color={'white'} bg={'blue.400'}>Submit</Button>
             </FormControl>
         </Box>
     );
