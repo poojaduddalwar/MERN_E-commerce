@@ -10,8 +10,8 @@ import {
 
 
 const ProductCard = ({ data }) => {
-    const { imageUrl, productName, actualPrice, listingPrice, color } = data
-    console.log(data)
+    const { imageUrl, name, price, listPrice, color } = data
+    // console.log(data)
     return (
         <Box
             role={'group'}
@@ -58,15 +58,15 @@ const ProductCard = ({ data }) => {
                 <Text color={'gray.500'} fontSize={'sm'} textTransform={'uppercase'}>
                     Brand
                 </Text>
-                <Heading fontSize={'2xl'} fontFamily={'body'} fontWeight={500}>
-                    {productName}, {color}
+                <Heading isTruncated fontSize={'2xl'} fontFamily={'body'} fontWeight={500}>
+                    {name}, {color}
                 </Heading>
                 <Stack direction={'row'} align={'center'}>
                     <Text color={'gray.700'} fontWeight={800} fontSize={'xl'}>
-                        {listingPrice}
+                        {listPrice}
                     </Text>
                     <Text textDecoration={'line-through'} color={'gray.600'}>
-                        {actualPrice}
+                        {price}
                     </Text>
                 </Stack>
             </Stack>

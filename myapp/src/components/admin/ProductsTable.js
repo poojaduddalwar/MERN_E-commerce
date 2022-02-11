@@ -13,17 +13,32 @@ import {
 } from '@chakra-ui/react'
 
 import { useSelector, useDispatch } from 'react-redux';
+import axios from 'axios';
+import { useEffect, useState } from 'react'
 import { deleteProduct } from '../../actions/product';
 
 
 
 const ProductsTable = () => {
-    const { products } = useSelector(state => state.products)
+    // const { products } = useSelector(state => state.products)
     const dispatch = useDispatch()
 
     const handleDelete = (productId) => {
         dispatch(deleteProduct(productId))
     }
+    const [products, setproducts] = useState([])
+
+    const getProducts = async () => {
+        const res = await axios.get('http://localhost:8080/api/v1/product/all')
+        // console.log(res.data)
+        const { products, message } = res.data
+        // console.log(products)
+        setproducts(products)
+    }
+
+    useEffect(() => {
+        getProducts()
+    }, [])
 
     return (
         <Table variant='simple'>
@@ -42,16 +57,16 @@ const ProductsTable = () => {
             <Tbody>
                 {products.map(product => <>
                     <Tr>
-                        <Td>{product && product.id}</Td>
-                        <Td>{product && product.productName}</Td>
+                        <Td>{product && product._id}</Td>
+                        <Td>{product && product.name}</Td>
                         <Td>{product && product.category}</Td>
-                        <Td>{product && product.actualPrice}</Td>
-                        <Td>{product && product.listingPrice}</Td>
+                        <Td>{product && product.price}</Td>
+                        <Td>{product && product.listPrice}</Td>
                         <Td>{product && product.color}</Td>
                         <Td color={product && product.stock < 20 ? "red" : "green.400"} isNumeric>{product && product.stock}</Td>
                         <Td>
                             <Stack direction='row' spacing={4} align='center'>
-                                <Button onClick={() => { handleDelete(product.id) }} colorScheme='red' variant='solid'>
+                                <Button onClick={() => { handleDelete(product._id) }} colorScheme='red' variant='solid'>
                                     Delete
                                 </Button>
                                 <Button colorScheme='purple' variant='solid'>

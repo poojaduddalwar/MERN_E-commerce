@@ -28,3 +28,28 @@ export const addCategory = (name, description) => async (dispatch) => {
         toast.error(error.message)
     }
 };
+
+export const deleteCategory = (id) => async (dispatch) => {
+
+    try {
+        const base_Url = 'http://localhost:8080'
+        const res = await axios.delete(`${base_Url}/api/v1/category/delete/${id}`)
+        console.log(res.data)
+        const { category, message } = res.data
+        if (category) {
+            toast.success(message)
+
+            dispatch({
+                type: "DELETE_CATEGORY"
+            })
+        } else {
+            toast.error(message)
+            dispatch({
+                type: "DELETE_CATEGORY_FAILED"
+            })
+        }
+    } catch (error) {
+        console.log(error.message)
+        toast.error(error.message)
+    }
+};

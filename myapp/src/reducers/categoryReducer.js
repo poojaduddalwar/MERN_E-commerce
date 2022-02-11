@@ -10,6 +10,10 @@ const categoryReducer = (state = initialState, action) => {
             return state
         case "ADD_CATEGORY_FAILED":
             return state
+        case "DELETE_CATEGORY":
+            return state
+        case "DELETE_CATEGORY_FAILED":
+            return state
         default:
             return state
     }

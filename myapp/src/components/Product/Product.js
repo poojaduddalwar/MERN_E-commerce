@@ -22,6 +22,7 @@ import {
 import { ReactElement } from 'react';
 import Values from '../Values';
 import Details from './Details';
+import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router';
@@ -46,22 +47,38 @@ const Feature = ({ text, icon, iconBg }) => {
 
 export default function Product() {
 
-    const [selectedProduct, setSelectedproduct] = useState(null)
-    const { products } = useSelector(state => state.products)
+    // const [selectedProduct, setSelectedproduct] = useState(null)
+    // const { products } = useSelector(state => state.products)
+    const [products, setproducts] = useState({})
     const { productId } = useParams()
     //useParams return the parameter in the url
 
-    const fetchProduct = (productId) => {
-        const fproduct = products.find(item => item.id == productId)
-        console.log(fproduct)
-        setSelectedproduct(fproduct)
+    // const fetchProduct = (productId) => {
+    //     const fproduct = products.find(item => item.id == productId)
+    //     console.log(fproduct)
+    //     setSelectedproduct(fproduct)
+    // }
+
+    // useEffect(() => {
+    //     fetchProduct(productId)
+    // }, [])
+
+    // console.log(selectedProduct)
+
+    const getProducts = async () => {
+        const res = await axios.get('http://localhost:8080/api/v1/product/all')
+        // console.log(res.data)
+        const { products } = res.data
+        // console.log(products)
+        // setproducts(products)
+        const fproduct = products.find(item => item._id == productId)
+        // console.log(fproduct)
+        setproducts(fproduct)
     }
 
     useEffect(() => {
-        fetchProduct(productId)
+        getProducts()
     }, [])
-
-    console.log(selectedProduct)
 
     // const { imageUrl, listingPrice, category, description, productName, compatibleWith, color } = selectedProduct
 
@@ -72,7 +89,7 @@ export default function Product() {
                     <Image
                         rounded={'md'}
                         alt={'feature image'}
-                        src={selectedProduct && selectedProduct.imageUrl}
+                        src={products && products.imageUrl}
                         objectFit={'cover'}
                     />
                 </Flex>
@@ -86,11 +103,11 @@ export default function Product() {
                         p={2}
                         alignSelf={'flex-start'}
                         rounded={'md'}>
-                        {selectedProduct && selectedProduct.category}
+                        {products && products.category}
                     </Text>
-                    <Heading>{selectedProduct && selectedProduct.productName}</Heading>
+                    <Heading>{products && products.productName}</Heading>
                     <Text color={'gray.500'} fontSize={'lg'}>
-                        {selectedProduct && selectedProduct.description}
+                        {products && products.description}
                     </Text>
                     <Stack
                         spacing={4}
@@ -105,7 +122,7 @@ export default function Product() {
                                 <Icon as={IoScanOutline} color={'yellow.500'} w={5} h={5} />
                             }
                             iconBg={useColorModeValue('yellow.100', 'yellow.900')}
-                            text={`For : ${selectedProduct && selectedProduct.compatibleWith}`}
+                            text={`For : ${products && products.compatibleWith}`}
                         />
 
                         <Feature
@@ -113,7 +130,7 @@ export default function Product() {
                                 <Icon as={IoColorFilterOutline} color={'purple.500'} w={5} h={5} />
                             }
                             iconBg={useColorModeValue('purple.100', 'purple.900')}
-                            text={`Color : ${selectedProduct && selectedProduct.color}`}
+                            text={`Color : ${products && products.color}`}
                         />
                         <Feature
                             icon={<Icon as={IoShieldCheckmarkOutline} color={'green.500'} w={5} h={5} />}
@@ -133,13 +150,13 @@ export default function Product() {
                             }}>
                             Buy Now
                         </Button>
-                        <Heading color={'gray.900'} textAlign={'center'} borderRadius={'10px'} flexGrow={'2'} background={'gray.100'}>{selectedProduct && selectedProduct.listingPrice}</Heading>
+                        <Heading color={'gray.900'} textAlign={'center'} borderRadius={'10px'} flexGrow={'2'} background={'gray.100'}>Rs. {products && products.listPrice}</Heading>
                     </Flex>
                 </Stack>
 
             </SimpleGrid>
             <Values />
-            {/* <Details /> */}
+            <Details />
         </Container>
     );
 }
