@@ -21,6 +21,7 @@ import {
 
 import { Link as lee } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import CartPreview from '../components/cart/CartPreview';
 
 export default function Navbar() {
     const { isOpen, onToggle } = useDisclosure();
@@ -57,44 +58,47 @@ export default function Navbar() {
                     </Flex>
                 </Flex>
 
-                {token ? <Button
-                    as={lee}
-                    fontSize={'md'}
-                    fontWeight={600}
-                    color={'white'}
-                    bg={'red.400'}
-                    to={'/'}
-                    _hover={{
-                        bg: 'red.300',
-                    }}>
-                    Logout
-                </Button> : <Stack
-                    flex={{ base: 1, md: 0 }}
-                    justify={'flex-end'}
-                    direction={'row'}
-                    spacing={6}>
-                    <Button
-                        as={lee}
-                        display={{ base: 'none', md: 'inline-flex' }}
-                        fontSize={'md'}
-                        fontWeight={400}
-                        variant={'link'}
-                        to={'/login'}>
-                        Sign In
-                    </Button>
-                    <Button
-                        as={lee}
-                        fontSize={'md'}
-                        fontWeight={600}
-                        color={'white'}
-                        bg={'blue.400'}
-                        to={'/signup'}
-                        _hover={{
-                            bg: 'blue.300',
-                        }}>
-                        Sign Up
-                    </Button>
-                </Stack>}
+                {token ?
+                    <>
+                        <CartPreview />
+                        <Button
+                            as={lee}
+                            fontSize={'md'}
+                            fontWeight={600}
+                            color={'white'}
+                            bg={'red.400'}
+                            to={'/'}
+                            _hover={{
+                                bg: 'red.300',
+                            }}>
+                            Logout
+                        </Button> </> : <Stack
+                            flex={{ base: 1, md: 0 }}
+                            justify={'flex-end'}
+                            direction={'row'}
+                            spacing={6}>
+                        <Button
+                            as={lee}
+                            display={{ base: 'none', md: 'inline-flex' }}
+                            fontSize={'md'}
+                            fontWeight={400}
+                            variant={'link'}
+                            to={'/login'}>
+                            Sign In
+                        </Button>
+                        <Button
+                            as={lee}
+                            fontSize={'md'}
+                            fontWeight={600}
+                            color={'white'}
+                            bg={'blue.400'}
+                            to={'/signup'}
+                            _hover={{
+                                bg: 'blue.300',
+                            }}>
+                            Sign Up
+                        </Button>
+                    </Stack>}
             </Flex>
 
             <Collapse in={isOpen} animateOpacity>

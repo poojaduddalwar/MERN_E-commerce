@@ -102,7 +102,10 @@ const productReducer = (state = initialState, action) => {
         case "DELETE_PRODUCT_FAILED":
             return state
         case "ADD_PRODUCT":
-            return state
+            const { product } = payload
+            return {
+                products: [...state.products, product]
+            }
         case "ADD_PRODUCT_FAILED":
             return state
         default:

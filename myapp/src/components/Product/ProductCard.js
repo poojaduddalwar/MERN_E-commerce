@@ -58,15 +58,15 @@ const ProductCard = ({ data }) => {
                 <Text color={'gray.500'} fontSize={'sm'} textTransform={'uppercase'}>
                     Brand
                 </Text>
-                <Heading isTruncated fontSize={'2xl'} fontFamily={'body'} fontWeight={500}>
+                <Heading fontSize={'2xl'} fontFamily={'body'} fontWeight={500}>
                     {name}, {color}
                 </Heading>
                 <Stack direction={'row'} align={'center'}>
                     <Text color={'gray.700'} fontWeight={800} fontSize={'xl'}>
-                        {listPrice}
+                        ${listPrice}
                     </Text>
                     <Text textDecoration={'line-through'} color={'gray.600'}>
-                        {price}
+                        ${price}
                     </Text>
                 </Stack>
             </Stack>

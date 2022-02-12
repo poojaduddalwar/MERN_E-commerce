@@ -6,6 +6,9 @@ import Product from "./components/Product/Product";
 import Order from "./components/Order";
 import MyOrders from "./components/MyOrders";
 import AdminPage from "./components/AdminPage";
+import Cart from './components/cart/Cart';
+import { getProducts } from './actions/product';
+import { loadCart } from './actions/cart';
 import Navbar from "./layout/Navbar";
 import Footer from "./layout/Footer";
 import Admin from "./components/admin/Admin";
@@ -31,6 +34,12 @@ const App = () => {
     }
   }, [])
 
+  useEffect(() => {
+    console.log('lorem')
+    dispatch(getProducts())
+    dispatch(loadCart())
+  }, [])
+
   return (
     <div className="App">
       <div><Toaster /></div>
@@ -44,6 +53,7 @@ const App = () => {
         <Route path="/shop/:productId" element={<Product />} />
         {/* <Route path="/admin" element={<AdminPage />} /> */}
         <Route path='/admin' element={<Admin />} />
+        <Route path='/cart' element={<Cart />} />
       </Routes>
       <Footer />
 

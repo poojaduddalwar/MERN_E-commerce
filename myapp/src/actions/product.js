@@ -12,7 +12,7 @@
 //     }
 // }
 
-import jwt from 'jsonwebtoken'
+// import jwt from 'jsonwebtoken'
 import toast from 'react-hot-toast'
 import axios from 'axios'
 
@@ -29,7 +29,8 @@ export const addProduct = (name, price, listPrice, description, color, compatibl
             toast.success(message)
 
             dispatch({
-                type: "ADD_PRODUCT"
+                type: "ADD_PRODUCT",
+                payload: { product }
             })
         } else {
             toast.error(message)
@@ -67,3 +68,12 @@ export const deleteProduct = (id) => async (dispatch) => {
         toast.error(error.message)
     }
 };
+
+export const getProducts = (name, description) => async (dispatch) => {
+    const res = await axios.get('http://localhost:8080/api/v1/product/all')
+    const { products } = res.data
+    dispatch({
+        type: "GET_PRODUCTS",
+        payload: { products }
+    })
+}

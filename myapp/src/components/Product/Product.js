@@ -18,14 +18,17 @@ import {
     IoScanOutline,
     IoSearchSharp,
     IoShieldCheckmarkOutline,
+    IoCartOutline
 } from 'react-icons/io5';
-import { ReactElement } from 'react';
+// import { ReactElement } from 'react';
 import Values from '../Values';
 import Details from './Details';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import { useParams } from 'react-router';
+import { addToCart } from '../../actions/cart';
+import { useDispatch } from 'react-redux';
 
 
 const Feature = ({ text, icon, iconBg }) => {
@@ -51,6 +54,7 @@ export default function Product() {
     // const { products } = useSelector(state => state.products)
     const [products, setproducts] = useState({})
     const { productId } = useParams()
+    const dispatch = useDispatch()
     //useParams return the parameter in the url
 
     // const fetchProduct = (productId) => {
@@ -71,7 +75,7 @@ export default function Product() {
         const { products } = res.data
         // console.log(products)
         // setproducts(products)
-        const fproduct = products.find(item => item._id == productId)
+        const fproduct = products.find(product => product._id == productId)
         // console.log(fproduct)
         setproducts(fproduct)
     }
@@ -80,7 +84,22 @@ export default function Product() {
         getProducts()
     }, [])
 
+    console.log(products)
     // const { imageUrl, listingPrice, category, description, productName, compatibleWith, color } = selectedProduct
+
+    const addCart = (item) => {
+        // const cartItems = JSON.parse(localStorage.getItem('cart')) || []
+        // console.log(cartItems)
+        // console.log(cartItems.includes(item))
+        // if (!cartItems.find(i => i._id === item._id)) {
+        //     cartItems.push(item)
+        //     localStorage.setItem("cart", JSON.stringify(cartItems))
+        //     toast.success(`${item.name} added to cart`)
+        // } else {
+        //     toast.error(`${item.name} is already in your cart`)
+        // }
+        dispatch(addToCart(item))
+    }
 
     return (
         <Container maxW={'7xl'} py={12}>
@@ -140,6 +159,9 @@ export default function Product() {
                     </Stack>
                     <Flex justifyContent={'space-between'} spacing={10} pt={2}>
                         <Button
+                            onClick={() => {
+                                addCart(products)
+                            }}
                             flexGrow={'4'}
                             loadingText="Submitting"
                             size="lg"
@@ -148,9 +170,9 @@ export default function Product() {
                             _hover={{
                                 bg: 'blue.400',
                             }}>
-                            Buy Now
+                            Add To Cart &nbsp; &nbsp; <IoCartOutline size={30} />
                         </Button>
-                        <Heading color={'gray.900'} textAlign={'center'} borderRadius={'10px'} flexGrow={'2'} background={'gray.100'}>Rs. {products && products.listPrice}</Heading>
+                        <Heading color={'gray.900'} textAlign={'center'} borderRadius={'10px'} flexGrow={'2'} background={'gray.100'}>$ {products && products.listPrice}</Heading>
                     </Flex>
                 </Stack>
 
