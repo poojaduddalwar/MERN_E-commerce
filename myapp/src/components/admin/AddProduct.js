@@ -32,7 +32,7 @@ const AddProduct = () => {
     const dispatch = useDispatch()
 
     const getCategories = async () => {
-        const res = await axios.get('http://localhost:8080/api/v1/category/all')
+        const res = await axios.get(' https://pooja-ecommerce-api.herokuapp.com/api/v1/category/all')
         const { category, message } = res.data
         setCategories(category)
     }

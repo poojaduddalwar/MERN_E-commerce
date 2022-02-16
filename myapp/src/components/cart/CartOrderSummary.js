@@ -26,6 +26,7 @@ const OrderSummaryItem = (props) => {
 }
 
 export const CartOrderSummary = ({ total }) => {
+    const total1 = total * 100
     const loadScript = React.useCallback((src) => {
         return new Promise((resolve) => {
             const script = document.createElement("script");
@@ -51,8 +52,9 @@ export const CartOrderSummary = ({ total }) => {
         }
 
         // creating a new order
-        const result = await axios.post("http://localhost:8080/api/v1/order/createOrder", {
-            amount: '50000'
+        const result = await axios.post(" https://pooja-ecommerce-api.herokuapp.com/api/v1/order/createOrder", {
+            amount: total1
+            // amount: '50000'//in smallest denomination i.e paise means 50000 = 500
         });
 
         if (!result) {
@@ -64,7 +66,7 @@ export const CartOrderSummary = ({ total }) => {
         const { amount, id: order_id, currency } = result.data;
 
         const options = {
-            key: "rzp_test_g5IaMybMrLfCiM", // Enter the Key ID generated from the Dashboard
+            key: "rzp_test_Ub3N5r8arx3FAJ", // Enter the Key ID generated from the Dashboard
             amount: amount.toString(),
             currency: currency,
             name: "+Plus.",
@@ -79,17 +81,17 @@ export const CartOrderSummary = ({ total }) => {
                     razorpaySignature: response.razorpay_signature,
                 };
 
-                const result = await axios.post("http://localhost:5000/payment/success", data);
+                const result = await axios.post(" https://pooja-ecommerce-api.herokuapp.com/api/v1/order/verify", data);
 
                 alert(result.data.msg);
             },
             prefill: {
-                name: "Kartik Gupta",
-                email: "kartikdps.kg@gmail.com",
+                name: "Pooja Duddalwar",
+                email: "pgduddalwar2002@gmail.com",
                 contact: "9999999999",
             },
             notes: {
-                address: "Bellevue 98004",
+                address: "Camp road",
             },
             theme: {
                 color: "#61dafb",

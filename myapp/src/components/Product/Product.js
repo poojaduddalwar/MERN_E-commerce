@@ -52,7 +52,9 @@ export default function Product() {
 
     // const [selectedProduct, setSelectedproduct] = useState(null)
     // const { products } = useSelector(state => state.products)
-    const [products, setproducts] = useState({})
+    const [products, setproducts] = useState([])
+    const [category, setcategory] = useState([])
+    const [compatibleWith, setcompatibleWith] = useState([])
     const { productId } = useParams()
     const dispatch = useDispatch()
     //useParams return the parameter in the url
@@ -70,13 +72,16 @@ export default function Product() {
     // console.log(selectedProduct)
 
     const getProducts = async () => {
-        const res = await axios.get('http://localhost:8080/api/v1/product/all')
+        const res = await axios.get(' https://pooja-ecommerce-api.herokuapp.com/api/v1/product/all')
         // console.log(res.data)
         const { products } = res.data
         // console.log(products)
         // setproducts(products)
         const fproduct = products.find(product => product._id == productId)
         // console.log(fproduct)
+        const { category, compatibleWith } = fproduct
+        setcategory(category)
+        setcompatibleWith(compatibleWith)
         setproducts(fproduct)
     }
 
@@ -122,7 +127,7 @@ export default function Product() {
                         p={2}
                         alignSelf={'flex-start'}
                         rounded={'md'}>
-                        {products && products.category}
+                        {products && category.description}
                     </Text>
                     <Heading>{products && products.productName}</Heading>
                     <Text color={'gray.500'} fontSize={'lg'}>
@@ -141,7 +146,7 @@ export default function Product() {
                                 <Icon as={IoScanOutline} color={'yellow.500'} w={5} h={5} />
                             }
                             iconBg={useColorModeValue('yellow.100', 'yellow.900')}
-                            text={`For : ${products && products.compatibleWith}`}
+                            text={`For : ${products && compatibleWith}`}
                         />
 
                         <Feature

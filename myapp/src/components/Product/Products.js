@@ -17,7 +17,7 @@ export default function Products() {
     // const { products } = useSelector(state => state.products)
     const [products, setproducts] = useState([])
     const getProducts = async () => {
-        const res = await axios.get('http://localhost:8080/api/v1/product/all')
+        const res = await axios.get(' https://pooja-ecommerce-api.herokuapp.com/api/v1/product/all')
         // console.log(res.data)
         const { products } = res.data
         // console.log(products)

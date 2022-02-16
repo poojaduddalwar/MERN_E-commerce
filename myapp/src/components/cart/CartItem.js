@@ -83,6 +83,8 @@ export const CartItem = (props) => {
                     value={quantity}
                     onChange={(e) => {
                         onChangeQuantity?.(+e.currentTarget.value)
+                        dispatch(modifyQuantity(item, e.currentTarget.value))
+
                     }}
                 />
                 <PriceTag price={listPrice} currency={currency} />
