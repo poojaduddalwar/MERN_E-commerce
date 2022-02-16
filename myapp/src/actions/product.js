@@ -19,7 +19,7 @@ import axios from 'axios'
 export const addProduct = (name, price, listPrice, description, color, compatibleWith, category, imageUrl, stock) => async (dispatch) => {
 
     try {
-        const base_Url = ' https://pooja-ecommerce-api.herokuapp.com/'
+        const base_Url = ' https://pooja-ecommerce-api.herokuapp.com'
         const res = await axios.post(`${base_Url}/api/v1/product/add`, {
             name, price, listPrice, description, color, compatibleWith, category, imageUrl, stock
         })
@@ -47,7 +47,7 @@ export const addProduct = (name, price, listPrice, description, color, compatibl
 export const deleteProduct = (id) => async (dispatch) => {
 
     try {
-        const base_Url = ' https://pooja-ecommerce-api.herokuapp.com/'
+        const base_Url = ' https://pooja-ecommerce-api.herokuapp.com'
         const res = await axios.delete(`${base_Url}/api/v1/product/delete/${id}`)
         console.log(res.data)
         const { product, message } = res.data
