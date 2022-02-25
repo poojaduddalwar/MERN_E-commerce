@@ -5,7 +5,7 @@ import axios from 'axios'
 export const addCategory = (name, description) => async (dispatch) => {
 
     try {
-        const base_Url = ' https://pooja-ecommerce-api.herokuapp.com'
+        const base_Url = 'http://localhost:8080'
         const res = await axios.post(`${base_Url}/api/v1/category/add`, {
             name, description
         })
@@ -32,7 +32,7 @@ export const addCategory = (name, description) => async (dispatch) => {
 export const deleteCategory = (id) => async (dispatch) => {
 
     try {
-        const base_Url = ' https://pooja-ecommerce-api.herokuapp.com'
+        const base_Url = 'http://localhost:8080'
         const res = await axios.delete(`${base_Url}/api/v1/category/delete/${id}`)
         console.log(res.data)
         const { category, message } = res.data

@@ -18,6 +18,14 @@ const authReducer = (state = initialState, action) => {
             return {
                 ...payload
             }
+        case "LOGOUT_SUCCESS":
+            return {
+                ...state, token: null
+            }
+        // case "LOGOUT_FAILED":
+        //     return {
+        //         ...payload
+        //     }
         case "SIGNUP_SUCCESS":
             return {
                 ...payload

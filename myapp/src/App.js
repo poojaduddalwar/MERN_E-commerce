@@ -24,9 +24,15 @@ const App = () => {
 
   useEffect(() => {
     const token = localStorage.getItem('token')
-    if (token) {
+    if (token == 'null') {
       //dispatch an action that modifies the store
       // console.log(token)
+      dispatch({
+        type: "SET_AUTH_TOKEN",
+        payload: { token: null }
+      })
+    }
+    else {
       dispatch({
         type: "SET_AUTH_TOKEN",
         payload: { token }

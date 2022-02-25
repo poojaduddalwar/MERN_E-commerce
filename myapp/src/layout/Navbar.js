@@ -20,12 +20,18 @@ import {
 } from '@chakra-ui/icons';
 
 import { Link as lee } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import CartPreview from '../components/cart/CartPreview';
+import { logoutUser } from '../actions/auth';
 
 export default function Navbar() {
     const { isOpen, onToggle } = useDisclosure();
     const { token } = useSelector(state => state.authReducer)
+    const dispatch = useDispatch()
+
+    const handleLogout = () => {
+        dispatch(logoutUser())
+    }
 
     return (
         <Box>
@@ -67,6 +73,7 @@ export default function Navbar() {
                             fontWeight={600}
                             color={'white'}
                             bg={'red.400'}
+                            onClick={handleLogout}
                             to={'/'}
                             _hover={{
                                 bg: 'red.300',
