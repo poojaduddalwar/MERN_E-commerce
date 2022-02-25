@@ -28,7 +28,7 @@ const CategoriesTable = () => {
     const [categories, setCategories] = useState([])
 
     const getCategories = async () => {
-        const res = await axios.get('http://localhost:8080/api/v1/category/all')
+        const res = await axios.get('https://pooja-ecommerce-api.herokuapp.com/api/v1/category/all')
         // console.log(res.data)
         const { category } = res.data
         // // console.log(products)

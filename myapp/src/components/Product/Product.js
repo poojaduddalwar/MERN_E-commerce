@@ -72,7 +72,7 @@ export default function Product() {
     // console.log(selectedProduct)
 
     const getProducts = async () => {
-        const res = await axios.get('http://localhost:8080/api/v1/product/all')
+        const res = await axios.get('https://pooja-ecommerce-api.herokuapp.com/api/v1/product/all')
         // console.log(res.data)
         const { products } = res.data
         // console.log(products)
