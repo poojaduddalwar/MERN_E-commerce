@@ -52,7 +52,7 @@ export const CartOrderSummary = ({ total }) => {
         }
 
         // creating a new order
-        const result = await axios.post(" https://pooja-ecommerce-api.herokuapp.com/api/v1/order/createOrder", {
+        const result = await axios.post(process.env.REACT_APP_BACKEND_URL+"/api/v1/order/createOrder", {
             amount: total1
             // amount: '50000'//in smallest denomination i.e paise means 50000 = 500
         });
@@ -81,7 +81,7 @@ export const CartOrderSummary = ({ total }) => {
                     razorpaySignature: response.razorpay_signature,
                 };
 
-                const result = await axios.post(" https://pooja-ecommerce-api.herokuapp.com/api/v1/order/verify", data);
+                const result = await axios.post(process.env.REACT_APP_BACKEND_URL+"/api/v1/order/verify", data);
 
                 alert(result.data.msg);
             },

@@ -1,25 +1,26 @@
-import jwt from 'jsonwebtoken'
+import jwtDecode from 'jwt-decode';
 import toast from 'react-hot-toast'
 import axios from 'axios'
 
 export const loginUser = (email, password) => async (dispatch) => {
 
     try {
-        const base_Url = 'https://pooja-ecommerce-api.herokuapp.com'
+        const base_Url = process.env.REACT_APP_BACKEND_URL
         const res = await axios.post(`${base_Url}/api/v1/auth/login`, {
             email, password
         })
-        console.log(res.data)
-        const { token, message } = res.data
+        const { token, user , message} = res.data
         if (token) {
             toast.success("Login Success !")
 
+
             //save token to the local storage
             localStorage.setItem('token', token)
+            localStorage.setItem('user', user)            
 
             dispatch({
                 type: "LOGIN_SUCCESS",
-                payload: { token }
+                payload: { token, user }
             })
         } else {
             toast.error(message)
@@ -34,16 +35,17 @@ export const loginUser = (email, password) => async (dispatch) => {
     }
 };
 
-export const signupUser = (email, firstName, lastName, password) => async (dispatch) => {
+export const signupUser = (name, email, password) => async (dispatch) => {
 
     try {
-        const base_Url = 'https://pooja-ecommerce-api.herokuapp.com'
+        const base_Url = process.env.REACT_APP_BACKEND_URL
         const res = await axios.post(`${base_Url}/api/v1/auth/signup`, {
-            email, firstName, lastName, password
+            name, email, password
         })
         // console.log(res.data)
 
         const { user } = res.data
+        
         if (user) {
             toast.success("SIGNUP SUCCESS")
             dispatch({

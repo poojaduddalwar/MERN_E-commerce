@@ -4,13 +4,15 @@ import loaderReducer from "./loaderReducer";
 import products from "./productsReducer";
 import categories from "./categoryReducer";
 import cart from './cartReducer'
+import { orderAdminReducer } from "./orderReducer";
 
 export default combineReducers({
     authReducer,
     loaderReducer,
     products,
     categories,
-    cart
+    cart,
+    orderAdmin: orderAdminReducer
 })
 
 // to combine two seperate reducers we need to use a function called combineReducers provided by redux

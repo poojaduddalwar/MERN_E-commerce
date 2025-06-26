@@ -12,6 +12,7 @@ import { loadCart } from './actions/cart';
 import Navbar from "./layout/Navbar";
 import Footer from "./layout/Footer";
 import Admin from "./components/admin/Admin";
+import AdminOrders from './components/admin/AdminOrders';
 import PrivateRoute from "./routing/PrivateRoute";
 import { Routes, Route } from "react-router-dom";
 import { Toaster } from 'react-hot-toast';
@@ -60,6 +61,7 @@ const App = () => {
         {/* <Route path="/admin" element={<AdminPage />} /> */}
         <Route path='/admin' element={<Admin />} />
         <Route path='/cart' element={<Cart />} />
+        <Route path="/admin/orders" element={<PrivateRoute requiredRole="admin"><AdminOrders /></PrivateRoute>} />
       </Routes>
       <Footer />
 

@@ -26,7 +26,9 @@ import { logoutUser } from '../actions/auth';
 
 export default function Navbar() {
     const { isOpen, onToggle } = useDisclosure();
-    const { token } = useSelector(state => state.authReducer)
+    const { token, user } = useSelector(state => state.authReducer);
+    console.log(localStorage.getItem(user));
+    
     const dispatch = useDispatch()
 
     const handleLogout = () => {
@@ -60,7 +62,7 @@ export default function Navbar() {
                 <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
                     <Link to='/' as={lee} ><Image hr borderRadius="full" boxSize="50px" src='https://www.svgrepo.com/show/174895/orkut-logo.svg' /></Link>
                     <Flex align={'center'} display={{ base: 'none', md: 'flex' }} ml={10}>
-                        <DesktopNav />
+                        <DesktopNav navItems={getNavItems(user)}/>
                     </Flex>
                 </Flex>
 
@@ -109,16 +111,16 @@ export default function Navbar() {
             </Flex>
 
             <Collapse in={isOpen} animateOpacity>
-                <MobileNav />
+                <MobileNav navItems={getNavItems(user)}/>
             </Collapse>
         </Box>
     );
 }
 
-const DesktopNav = () => {
+const DesktopNav = ({ NAV_ITEMS }) => {
     return (
         <Stack direction={'row'} spacing={4}>
-            {NAV_ITEMS.map((navItem) => (
+            {(NAV_ITEMS || []).map((navItem) => (
                 <Box key={navItem.label}>
                     <Link
                         as={lee}
@@ -136,13 +138,13 @@ const DesktopNav = () => {
 };
 
 
-const MobileNav = () => {
+const MobileNav = ({ NAV_ITEMS }) => {
     return (
         <Stack
             bg={useColorModeValue('white', 'gray.800')}
             p={4}
             display={{ md: 'none' }}>
-            {NAV_ITEMS.map((navItem) => (
+            {(NAV_ITEMS || []).map((navItem) => (
                 <MobileNavItem key={navItem.label} {...navItem} />
             ))}
         </Stack>
@@ -200,23 +202,16 @@ const MobileNavItem = ({ label, children, href }) => {
 };
 
 
-const NAV_ITEMS = [
-    {
-        label: 'Shop',
-        to: '/shop'
-    },
-    {
-        label: 'Shop for iPhone',
-        to: '/shop?q=iphone'
-    },
-    {
-        label: 'Shop for Watch',
-        to: '/shop?q=watch'
+const getNavItems = (user) => {
+  const items = [
+    { label: 'Shop', to: '/shop' },
+    { label: 'Shop for iPhone', to: '/shop?q=iphone' },
+    { label: 'Shop for Watch', to: '/shop?q=watch' },
+  ];
 
-    },
-    {
-        label: 'Admin',
-        to: '/admin'
-    }
+  if (user?.role === 'admin') {
+    items.push({ label: 'Admin', to: '/admin' });
+  }
 
-];
+  return items;
+};

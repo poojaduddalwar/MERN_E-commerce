@@ -25,13 +25,12 @@ export default function Signup() {
     const [showPassword, setShowPassword] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [firstName, setfirstName] = useState('');
-    const [lastName, setlastName] = useState('');
+    const [name, setName] = useState('');
 
     const dispatch = useDispatch()
 
     const handleSignup = () => {
-        dispatch(signupUser(email, firstName, lastName, password))
+        dispatch(signupUser(name, email, password))
     }
 
     //check to redirect the user once it has signed up
@@ -74,14 +73,8 @@ export default function Signup() {
                         <HStack>
                             <Box>
                                 <FormControl id="firstName" isRequired>
-                                    <FormLabel>First Name</FormLabel>
-                                    <Input onChange={e => { setfirstName(e.target.value) }} type="text" />
-                                </FormControl>
-                            </Box>
-                            <Box>
-                                <FormControl id="lastName">
-                                    <FormLabel>Last Name</FormLabel>
-                                    <Input onChange={e => { setlastName(e.target.value) }} type="text" />
+                                    <FormLabel>Full Name</FormLabel>
+                                    <Input onChange={e => { setName(e.target.value) }} type="text" />
                                 </FormControl>
                             </Box>
                         </HStack>

@@ -72,7 +72,7 @@ export default function Product() {
     // console.log(selectedProduct)
 
     const getProducts = async () => {
-        const res = await axios.get('https://pooja-ecommerce-api.herokuapp.com/api/v1/product/all')
+        const res = await axios.get(process.env.REACT_APP_BACKEND_URL+'/api/v1/product/all')
         // console.log(res.data)
         const { products } = res.data
         // console.log(products)
@@ -129,7 +129,7 @@ export default function Product() {
                         rounded={'md'}>
                         {products && category.description}
                     </Text>
-                    <Heading>{products && products.productName}</Heading>
+                    <Heading>{products && products.name}</Heading>
                     <Text color={'gray.500'} fontSize={'lg'}>
                         {products && products.description}
                     </Text>
