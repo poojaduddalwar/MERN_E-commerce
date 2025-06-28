@@ -7,13 +7,25 @@ const categoryReducer = (state = initialState, action) => {
 
     switch (type) {
         case "ADD_CATEGORY":
-            return state
+            return {
+                ...state,
+                categories: [...state.categories, payload.category]
+            }
         case "ADD_CATEGORY_FAILED":
             return state
         case "DELETE_CATEGORY":
-            return state
+            return {
+                ...state,
+                categories: state.categories.filter(category => category._id !== payload)
+            };
         case "DELETE_CATEGORY_FAILED":
             return state
+
+        case "EDIT_CATEGORY":
+            return {
+                ...state,
+                categories: [...state.categories, payload.category]
+            };
         default:
             return state
     }

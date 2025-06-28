@@ -1,7 +1,5 @@
-import { ReactElement } from 'react';
 import { Box, SimpleGrid, Icon, Text, Stack, Flex } from '@chakra-ui/react';
-import { FcAssistant, FcCustomerSupport, FcDonate, FcInTransit, FcRedo } from 'react-icons/fc';
-import { IoReloadCircleOutline } from 'react-icons/io5';
+import { FcCustomerSupport, FcInTransit, FcRedo } from 'react-icons/fc';
 
 
 const Feature = ({ title, text, icon }) => {

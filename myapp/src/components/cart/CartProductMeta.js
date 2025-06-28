@@ -8,7 +8,6 @@ import {
     Text,
     useColorModeValue as mode,
 } from '@chakra-ui/react'
-import * as React from 'react'
 import { FiGift } from 'react-icons/fi'
 
 

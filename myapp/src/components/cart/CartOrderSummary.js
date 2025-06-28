@@ -9,7 +9,6 @@ import {
 } from '@chakra-ui/react'
 import * as React from 'react'
 import { FaArrowRight } from 'react-icons/fa'
-import { formatPrice } from './PriceTag';
 import axios from 'axios'
 
 
@@ -42,6 +41,7 @@ export const CartOrderSummary = ({ total }) => {
     }, [])
 
     const handleOrder = async () => {
+        const token = localStorage.getItem("token");
         const res = await loadScript(
             "https://checkout.razorpay.com/v1/checkout.js"
         );
@@ -52,9 +52,13 @@ export const CartOrderSummary = ({ total }) => {
         }
 
         // creating a new order
-        const result = await axios.post(process.env.REACT_APP_BACKEND_URL+"/api/v1/order/createOrder", {
-            amount: total1
+        const result = await axios.post(process.env.REACT_APP_BACKEND_URL + "/api/v1/order/createOrder", {
+            totalAmount: total1
             // amount: '50000'//in smallest denomination i.e paise means 50000 = 500
+        }, {
+            headers: {
+                Authorization: `Bearer ${token}`, // 👈 Add this line
+            },
         });
 
         if (!result) {
@@ -63,11 +67,11 @@ export const CartOrderSummary = ({ total }) => {
         }
 
         // Getting the order details back
-        const { amount, id: order_id, currency } = result.data;
+        const { totalAmount, id: order_id, currency } = result.data;
 
         const options = {
             key: "rzp_test_Ub3N5r8arx3FAJ", // Enter the Key ID generated from the Dashboard
-            amount: amount.toString(),
+            totalAmount: totalAmount.toString(),
             currency: currency,
             name: "+Plus.",
             description: "Test Transaction",
@@ -81,7 +85,7 @@ export const CartOrderSummary = ({ total }) => {
                     razorpaySignature: response.razorpay_signature,
                 };
 
-                const result = await axios.post(process.env.REACT_APP_BACKEND_URL+"/api/v1/order/verify", data);
+                const result = await axios.post(process.env.REACT_APP_BACKEND_URL + "/api/v1/order/verify", data);
 
                 alert(result.data.msg);
             },

@@ -1,6 +1,5 @@
 import {
     Box,
-    Center,
     useColorModeValue,
     Heading,
     Text,
@@ -11,7 +10,6 @@ import {
 
 const ProductCard = ({ data }) => {
     const { imageUrl, name, price, listPrice, color } = data
-    // console.log(data)
     return (
         <Box
             role={'group'}

@@ -2,8 +2,8 @@ import toast from "react-hot-toast"
 
 export const addToCart = (item) => async (dispatch) => {
     const cartItems = JSON.parse(localStorage.getItem('cart')) || []
-    console.log(cartItems)
-    console.log(cartItems.includes(item))
+
+
     if (!cartItems.find(i => i._id === item._id)) {
         cartItems.push({ ...item, quantity: 1 })
         localStorage.setItem("cart", JSON.stringify(cartItems))

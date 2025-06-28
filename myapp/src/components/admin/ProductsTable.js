@@ -1,91 +1,179 @@
 import {
-    Table,
-    Thead,
-    Tbody,
-    Tfoot,
-    Tr,
-    Th,
-    Td,
-    TableCaption,
-    Button,
-    ButtonGroup,
-    Stack
-} from '@chakra-ui/react'
+  Table,
+  Thead,
+  Tbody,
+  TableCaption,
+  Tr,
+  Th,
+  Td,
+  Button,
+  Stack,
+  Input
+} from '@chakra-ui/react';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
-import { useEffect, useState } from 'react'
-import { deleteProduct } from '../../actions/product';
-
-
+import { useEffect, useState } from 'react';
+import { deleteProduct, editProduct } from '../../actions/product';
+import toast from 'react-hot-toast';
 
 const ProductsTable = () => {
-    // const { products } = useSelector(state => state.products)
-    const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-    const handleDelete = (productId) => {
-        dispatch(deleteProduct(productId))
-    }
-    const [products, setproducts] = useState([])
+  const [products, setProducts] = useState([]);
+  const [editingProduct, setEditingProduct] = useState(null);
+  const [formData, setFormData] = useState({});
+  const [loading, setLoading] = useState(false);
 
-    const getProducts = async () => {
-        const res = await axios.get(process.env.REACT_APP_BACKEND_URL+'/api/v1/product/all')
-        // console.log(res.data)
-        const { products, message } = res.data
-        // console.log(products)
-        setproducts(products)
-    }
+  const getProducts = async () => {
+    const res = await axios.get(process.env.REACT_APP_BACKEND_URL + '/api/v1/product/all');
+    const { products } = res.data;
+    setProducts(products);
+  };
 
-    useEffect(() => {
-        getProducts()
-    }, [])
+  useEffect(() => {
+    getProducts();
+  }, []);
 
-    return (
-        <Table variant='simple'>
-            <TableCaption>All Products</TableCaption>
-            <Thead>
-                <Tr>
-                    <Th>ID</Th>
-                    <Th>Name</Th>
-                    <Th>Category</Th>
-                    <Th>Actual Price</Th>
-                    <Th>Listing Price</Th>
-                    <Th>Color</Th>
-                    <Th isNumeric>Stock</Th>
-                </Tr>
-            </Thead>
-            <Tbody>
-                {products.map(product => <>
-                    <Tr>
-                        <Td>{product && product._id}</Td>
-                        <Td>{product && product.name}</Td>
-                        <Td>{product && product.category.name}</Td>
-                        <Td>{product && product.price}</Td>
-                        <Td>{product && product.listPrice}</Td>
-                        <Td>{product && product.color}</Td>
-                        <Td color={product && product.stock < 20 ? "red" : "green.400"} isNumeric>{product && product.stock}</Td>
-                        <Td>
-                            <Stack direction='row' spacing={4} align='center'>
-                                <Button onClick={() => { handleDelete(product._id) }} colorScheme='red' variant='solid'>
-                                    Delete
-                                </Button>
-                                <Button colorScheme='purple' variant='solid'>
-                                    Edit
-                                </Button>
-                            </Stack>
-                        </Td>
-                    </Tr>
-                </>)}
-            </Tbody>
-        </Table>
-    );
-}
+  const handleDelete = (productId) => {
+    dispatch(deleteProduct(productId));
+    setTimeout(getProducts, 1000); // Slight delay to allow state update
+  };
+
+  const handleEdit = (product) => {
+    setEditingProduct(product._id);
+    setFormData({
+      name: product.name,
+      price: product.price,
+      listPrice: product.listPrice,
+      color: product.color,
+      stock: product.stock,
+      category: product.category._id,
+      description: product.description,
+      compatibleWith: product.compatibleWith,
+      imageUrl: product.imageUrl,
+    });
+  };
+
+  const handleUpdate = (id) => {
+    setLoading(true);
+    dispatch(editProduct(id, formData))
+      .then(() => {
+        toast.success("Product Updated successfully");
+        setEditingProduct(null);
+        setTimeout(getProducts, 1000);
+      })
+      .catch((err) => {
+        toast.error("Failed to Update product");
+      })
+      .finally(() => setLoading(false));
+
+  };
+
+  return (
+    <Table variant='simple'>
+      <TableCaption>All Products</TableCaption>
+      <Thead>
+        <Tr>
+          <Th>ID</Th>
+          <Th>Name</Th>
+          <Th>Category</Th>
+          <Th>Actual Price</Th>
+          <Th>Listing Price</Th>
+          <Th>Color</Th>
+          <Th isNumeric>Stock</Th>
+          <Th>Actions</Th>
+        </Tr>
+      </Thead>
+      <Tbody>
+        {products.map(product => (
+          <Tr key={product._id}>
+            <Td>{product._id}</Td>
+
+            <Td>
+              {editingProduct === product._id ? (
+                <Input
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                />
+              ) : (
+                product.name
+              )}
+            </Td>
+
+            <Td>{product.category.name}</Td>
+
+            <Td>
+              {editingProduct === product._id ? (
+                <Input
+                  type='number'
+                  value={formData.price}
+                  onChange={(e) => setFormData({ ...formData, price: e.target.value })}
+                />
+              ) : (
+                product.price
+              )}
+            </Td>
+
+            <Td>
+              {editingProduct === product._id ? (
+                <Input
+                  type='number'
+                  value={formData.listPrice}
+                  onChange={(e) => setFormData({ ...formData, listPrice: e.target.value })}
+                />
+              ) : (
+                product.listPrice
+              )}
+            </Td>
+
+            <Td>
+              {editingProduct === product._id ? (
+                <Input
+                  value={formData.color}
+                  onChange={(e) => setFormData({ ...formData, color: e.target.value })}
+                />
+              ) : (
+                product.color
+              )}
+            </Td>
+
+            <Td color={product.stock < 20 ? 'red' : 'green.400'} isNumeric>
+              {editingProduct === product._id ? (
+                <Input
+                  type='number'
+                  value={formData.stock}
+                  onChange={(e) => setFormData({ ...formData, stock: e.target.value })}
+                />
+              ) : (
+                product.stock
+              )}
+            </Td>
+
+            <Td>
+              <Stack direction='row' spacing={4} align='center'>
+                {editingProduct === product._id ? (
+                  <Button onClick={() => handleUpdate(product._id)} colorScheme='green'
+                    isLoading={loading}
+                    loadingText="Saving">
+                    Save
+                  </Button>
+                ) : (
+                  <Button onClick={() => handleEdit(product)} colorScheme='purple'>
+                    Edit
+                  </Button>
+                )}
+
+                <Button onClick={() => handleDelete(product._id)} colorScheme='red'>
+                  Delete
+                </Button>
+              </Stack>
+            </Td>
+          </Tr>
+        ))}
+      </Tbody>
+    </Table>
+  );
+};
 
 export default ProductsTable;
-
-
-
-/*
-! UNDERSTANDING THE FLOW TO DELETE A PRODUCT FROM LIST :
-here in the ProductsTable.js onClick of the Delete button the handledelete function is called which takes product.id and we are dispatching an action which is returned by the deleteProduct function to the productsReducer where the productId is destructured from payload and the DELETE_PRODUCT case is executed and we get the resulted state which does not contain the deleted product with the use of filter method
-*/

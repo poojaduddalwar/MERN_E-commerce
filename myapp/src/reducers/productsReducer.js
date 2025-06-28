@@ -97,15 +97,29 @@ const productReducer = (state = initialState, action) => {
     const { type, payload } = action
 
     switch (type) {
+        case "GET_PRODUCTS":
+            return {
+                ...state,
+                products: payload.products
+            };
         case "DELETE_PRODUCT":
-            return state
+            return {
+                ...state,
+                products: state.products.filter(product => product._id !== payload)
+            };
+        case "EDIT_PRODUCT":
+            return {
+                ...state,
+                products: [...state.products, payload.product]
+            };
         case "DELETE_PRODUCT_FAILED":
             return state
         case "ADD_PRODUCT":
-            const { product } = payload
             return {
-                products: [...state.products, product]
+                ...state,
+                products: [...state.products, payload.product]
             }
+
         case "ADD_PRODUCT_FAILED":
             return state
         default:

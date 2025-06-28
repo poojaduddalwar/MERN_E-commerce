@@ -1,26 +1,22 @@
-import jwtDecode from 'jwt-decode';
 import toast from 'react-hot-toast'
 import axios from 'axios'
 
 export const loginUser = (email, password) => async (dispatch) => {
 
     try {
-        console.log("we came here");
-        
         const base_Url = process.env.REACT_APP_BACKEND_URL
         const res = await axios.post(`${base_Url}/api/v1/auth/login`, {
             email, password
         })
-        console.log(res.data);
-        
-        const { token, user , message} = res.data
+
+        const { token, user, message } = res.data
         if (token) {
             toast.success("Login Success !")
 
 
             //save token to the local storage
             localStorage.setItem('token', token)
-            localStorage.setItem('user', JSON.stringify(user))            
+            localStorage.setItem('user', JSON.stringify(user))
 
             dispatch({
                 type: "LOGIN_SUCCESS",
@@ -49,7 +45,7 @@ export const signupUser = (name, email, password) => async (dispatch) => {
         // console.log(res.data)
 
         const { user } = res.data
-        
+
         if (user) {
             toast.success("SIGNUP SUCCESS")
             dispatch({
@@ -73,12 +69,11 @@ export const signupUser = (name, email, password) => async (dispatch) => {
 export const logoutUser = () => async (dispatch) => {
 
     try {
-        // const token = localStorage.getItem(token)
-        // if (token) {
         toast.success("Logout Success !")
 
         //remove token from the local storage
-        localStorage.setItem("token", null)
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
 
         dispatch({
             type: "LOGOUT_SUCCESS",

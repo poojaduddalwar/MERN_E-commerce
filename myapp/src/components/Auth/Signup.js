@@ -17,7 +17,6 @@ import {
 import { useEffect, useState } from 'react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { Link as routerLink, useNavigate } from 'react-router-dom';
-import toast from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { signupUser } from '../../actions/auth';
 

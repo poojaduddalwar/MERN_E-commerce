@@ -9,11 +9,9 @@ import {
     Link,
     Button,
     Heading,
-    FormErrorMessage,
-    FormHelperText,
     Text,
 } from '@chakra-ui/react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { loginUser } from '../../actions/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router'
@@ -22,19 +20,18 @@ export default function Login() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const dispatch = useDispatch()
-    const { token } = useSelector(state => state.authReducer)
-
-    // useEffect(() => {
-    //     if (token) console.log('redirect user')
-    //     else console.log('do not redirect user')
-    // }, [token])
+    const { token, user } = useSelector(state => state.authReducer)
 
     const handleLogin = () => {
         dispatch(loginUser(email, password))
-        // console.log(email, password)
     }
 
-    return token ? <Navigate to='/' /> : <Flex
+    if (token) {
+        if (user.role === 'admin') return <Navigate to="/admin" />;
+        return <Navigate to="/" />;
+    }
+
+    return <Flex
         minH={'100vh'}
         align={'center'}
         justify={'center'}

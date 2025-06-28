@@ -6,21 +6,18 @@ import {
 } from '@chakra-ui/react';
 import ProductCard from './ProductCard'
 import Filters from '../FilterDrawer'
-import Values from '../Values';
 import { Link as lee } from 'react-router-dom'
-// import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 
 export default function Products() {
-    // const { products } = useSelector(state => state.products)
     const [products, setproducts] = useState([])
     const getProducts = async () => {
         const res = await axios.get(process.env.REACT_APP_BACKEND_URL+'/api/v1/product/all')
-        // console.log(res.data)
+  
         const { products } = res.data
-        // console.log(products)
+      
         setproducts(products)
     }
 

@@ -1,4 +1,4 @@
-import { CloseButton, Flex, Link, Select, SelectProps, useColorModeValue } from '@chakra-ui/react'
+import { CloseButton, Flex, Link, Select, useColorModeValue } from '@chakra-ui/react'
 import { PriceTag } from './PriceTag'
 import { CartProductMeta } from './CartProductMeta'
 import { useDispatch } from 'react-redux'
@@ -32,10 +32,7 @@ export const CartItem = (props) => {
         price,
         listPrice,
         onChangeQuantity,
-        onClickDelete,
-        setcartData,
         item,
-        _id
     } = props
 
     const dispatch = useDispatch()

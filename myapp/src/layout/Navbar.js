@@ -15,8 +15,7 @@ import {
 import {
     HamburgerIcon,
     CloseIcon,
-    ChevronDownIcon,
-    ChevronRightIcon,
+    ChevronDownIcon
 } from '@chakra-ui/icons';
 
 import { Link as lee } from 'react-router-dom';
@@ -27,7 +26,6 @@ import { logoutUser } from '../actions/auth';
 export default function Navbar() {
     const { isOpen, onToggle } = useDisclosure();
     const { token, user } = useSelector(state => state.authReducer);
-    console.log(localStorage.getItem(user));
     
     const dispatch = useDispatch()
 
@@ -62,11 +60,11 @@ export default function Navbar() {
                 <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
                     <Link to='/' as={lee} ><Image hr borderRadius="full" boxSize="50px" src='https://www.svgrepo.com/show/174895/orkut-logo.svg' /></Link>
                     <Flex align={'center'} display={{ base: 'none', md: 'flex' }} ml={10}>
-                        <DesktopNav navItems={getNavItems(user)}/>
+                        <DesktopNav NAV_ITEMS={getNavItems(user)}/>
                     </Flex>
                 </Flex>
 
-                {token ?
+                {token && user ? (
                     <>
                         <CartPreview />
                         <Button
@@ -81,7 +79,7 @@ export default function Navbar() {
                                 bg: 'red.300',
                             }}>
                             Logout
-                        </Button> </> : <Stack
+                        </Button> </> ) : ( <Stack
                             flex={{ base: 1, md: 0 }}
                             justify={'flex-end'}
                             direction={'row'}
@@ -107,11 +105,11 @@ export default function Navbar() {
                             }}>
                             Sign Up
                         </Button>
-                    </Stack>}
+                    </Stack> )}
             </Flex>
 
             <Collapse in={isOpen} animateOpacity>
-                <MobileNav navItems={getNavItems(user)}/>
+                <MobileNav NAV_ITEMS={getNavItems(user)}/>
             </Collapse>
         </Box>
     );

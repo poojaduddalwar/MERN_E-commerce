@@ -7,39 +7,22 @@ import {
     Stack,
     useColorModeValue as mode,
 } from '@chakra-ui/react'
-import * as React from 'react'
-import { useEffect } from 'react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { CartItem } from './CartItem.js'
 import { CartOrderSummary } from './CartOrderSummary'
+import { useNavigate } from 'react-router-dom';
 // import { cartData } from './data'
 
 const Cart = () => {
     const { cartItems, total } = useSelector(state => state.cart)
     const [cartData, setcartData] = useState([])
-    console.log(cartItems)
-    // const [total, setTotal] = useState(0)
     const [totalPrice, settotalPrice] = useState(0)
+    const navigate = useNavigate()
 
-
-    // useEffect(() => {
-    //     let total = 0
-    //     let quantity = 0
-    //     cartData?.forEach(item => {
-    //         if (!item.quantity) {
-    //             total += item.listPrice;
-    //             quantity += 1
-
-    //         }
-    //         else {
-    //             total += item.listPrice * item.quantity
-    //             quantity += item.quantity
-    //         }
-    //     })
-    //     setTotal(total)
-    //     settotalItems(quantity)
-    // }, [JSON.parse(localStorage.getItem("cart"))])
+    const navigateToShop = () => {
+        navigate('/shop')
+    }
 
     useEffect(() => {
         setcartData(cartItems)
@@ -50,7 +33,6 @@ const Cart = () => {
         settotalPrice(price)
     }, [cartItems])
 
-    // console.log(totalItems)
 
     return (
         <Box
@@ -80,7 +62,7 @@ const Cart = () => {
                     <CartOrderSummary total={totalPrice} />
                     <HStack mt="6" fontWeight="semibold">
                         <p>or</p>
-                        <Link color={mode('blue.500', 'blue.200')}>Continue shopping</Link>
+                        <Link color={mode('blue.500', 'blue.200')} onClick={navigateToShop}>Continue shopping</Link>
                     </HStack>
                 </Flex>
             </Stack> : "Nothing in the cart yet"}

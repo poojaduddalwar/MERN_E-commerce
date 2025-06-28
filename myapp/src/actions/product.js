@@ -1,62 +1,78 @@
-// export const deleteProduct = (productId) => {
-//     return {
-//         type: "DELETE_PRODUCT",
-//         payload: { productId }
-//     }
-// }
-
-// export const addProduct = (product) => {
-//     return {
-//         type: "ADD_PRODUCT",
-//         payload: { product }
-//     }
-// }
-
-// import jwt from 'jsonwebtoken'
 import toast from 'react-hot-toast'
 import axios from 'axios'
 
-export const addProduct = (name, price, listPrice, description, color, compatibleWith, category, imageUrl, stock) => async (dispatch) => {
-
+export const addProduct = (name, price, listPrice, description, color, compatibleWith, category, imageUrl, stock) => async (dispatch, getState) => {
     try {
         const base_Url = process.env.REACT_APP_BACKEND_URL
-        const res = await axios.post(`${base_Url}/api/v1/product/add`, {
-            name, price, listPrice, description, color, compatibleWith, category, imageUrl, stock
-        })
-        // console.log(res.data)
-        const { product, message } = res.data
+        const {
+            authReducer: { token },
+        } = getState();
+
+        const res = await axios.post(
+            `${base_Url}/api/v1/product/add`,
+            {
+                name,
+                price,
+                listPrice,
+                description,
+                color,
+                compatibleWith,
+                category,
+                imageUrl,
+                stock
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+
+        const { product, message } = res.data;
         if (product) {
-            toast.success(message)
+            toast.success(message);
 
             dispatch({
                 type: "ADD_PRODUCT",
                 payload: { product }
-            })
+            });
         } else {
-            toast.error(message)
-            dispatch({
-                type: "ADD_PRODUCT_FAILED"
-            })
+            toast.error(message);
+            dispatch({ type: "ADD_PRODUCT_FAILED" });
         }
     } catch (error) {
-        console.log(error.message)
-        toast.error(error.message)
+        console.log(error.message);
+        toast.error("Failed to add product");
     }
 };
 
-export const deleteProduct = (id) => async (dispatch) => {
+export const deleteProduct = (id) => async (dispatch, getState) => {
 
     try {
         const base_Url = process.env.REACT_APP_BACKEND_URL
-        const res = await axios.delete(`${base_Url}/api/v1/product/delete/${id}`)
-        console.log(res.data)
-        const { product, message } = res.data
+        // Get token from Redux store
+        const {
+            authReducer: { token },
+        } = getState();
+
+        const res = await axios.delete(
+            `${base_Url}/api/v1/product/delete/${id}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+
+        const { product, message } = res.data;
         if (product) {
             toast.success(message)
 
             dispatch({
-                type: "DELETE_PRODUCT"
+                type: "DELETE_PRODUCT",
+                payload: id
             })
+
         } else {
             toast.error(message)
             dispatch({
@@ -66,6 +82,33 @@ export const deleteProduct = (id) => async (dispatch) => {
     } catch (error) {
         console.log(error.message)
         toast.error(error.message)
+    }
+};
+
+export const editProduct = (id, updatedData) => async (dispatch, getState) => {
+    try {
+        const base_Url = process.env.REACT_APP_BACKEND_URL;
+        const {
+            authReducer: { token },
+        } = getState();
+
+        const res = await axios.put(`${base_Url}/api/v1/product/update/${id}`, updatedData, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        const { product, message } = res.data;
+
+        if (product) {
+            toast.success(message)
+            dispatch({
+                type: "EDIT_PRODUCT",
+                payload: product,
+            });
+        }
+    } catch (error) {
+        console.log(error.message);
     }
 };
 

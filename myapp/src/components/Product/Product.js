@@ -12,20 +12,15 @@ import {
     Button,
 } from '@chakra-ui/react';
 import {
-    IoAnalyticsSharp,
     IoColorFilterOutline,
-    IoLogoBitcoin,
     IoScanOutline,
-    IoSearchSharp,
     IoShieldCheckmarkOutline,
     IoCartOutline
 } from 'react-icons/io5';
-// import { ReactElement } from 'react';
 import Values from '../Values';
 import Details from './Details';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-// import { useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import { addToCart } from '../../actions/cart';
 import { useDispatch } from 'react-redux';
@@ -50,8 +45,6 @@ const Feature = ({ text, icon, iconBg }) => {
 
 export default function Product() {
 
-    // const [selectedProduct, setSelectedproduct] = useState(null)
-    // const { products } = useSelector(state => state.products)
     const [products, setproducts] = useState([])
     const [category, setcategory] = useState([])
     const [compatibleWith, setcompatibleWith] = useState([])
@@ -59,26 +52,13 @@ export default function Product() {
     const dispatch = useDispatch()
     //useParams return the parameter in the url
 
-    // const fetchProduct = (productId) => {
-    //     const fproduct = products.find(item => item.id == productId)
-    //     console.log(fproduct)
-    //     setSelectedproduct(fproduct)
-    // }
-
-    // useEffect(() => {
-    //     fetchProduct(productId)
-    // }, [])
-
-    // console.log(selectedProduct)
-
     const getProducts = async () => {
         const res = await axios.get(process.env.REACT_APP_BACKEND_URL+'/api/v1/product/all')
-        // console.log(res.data)
+       
         const { products } = res.data
-        // console.log(products)
-        // setproducts(products)
+        
         const fproduct = products.find(product => product._id == productId)
-        // console.log(fproduct)
+       
         const { category, compatibleWith } = fproduct
         setcategory(category)
         setcompatibleWith(compatibleWith)
@@ -90,19 +70,9 @@ export default function Product() {
     }, [])
 
     console.log(products)
-    // const { imageUrl, listingPrice, category, description, productName, compatibleWith, color } = selectedProduct
+    
 
     const addCart = (item) => {
-        // const cartItems = JSON.parse(localStorage.getItem('cart')) || []
-        // console.log(cartItems)
-        // console.log(cartItems.includes(item))
-        // if (!cartItems.find(i => i._id === item._id)) {
-        //     cartItems.push(item)
-        //     localStorage.setItem("cart", JSON.stringify(cartItems))
-        //     toast.success(`${item.name} added to cart`)
-        // } else {
-        //     toast.error(`${item.name} is already in your cart`)
-        // }
         dispatch(addToCart(item))
     }
 

@@ -1,7 +1,25 @@
+import jwtDecode from 'jwt-decode';
+
+const isTokenValid = (token) => {
+  try {
+    const { exp } = jwtDecode(token);
+    return exp * 1000 > Date.now();
+  } catch {
+    return false;
+  }
+};
+
+const storedToken = localStorage.getItem('token');
+const storedUser = localStorage.getItem('user');
+
+const validToken = storedToken && isTokenValid(storedToken);
+const user = validToken && storedUser ? JSON.parse(storedUser) : null;
+
 const initialState = {
-    token: null,
-    user: null
-}
+  token: validToken ? storedToken : null,
+  user: user,
+};
+
 
 const authReducer = (state = initialState, action) => {
     const { type, payload } = action
